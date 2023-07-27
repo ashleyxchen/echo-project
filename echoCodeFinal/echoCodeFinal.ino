@@ -39,7 +39,7 @@ void loop() {
   setServo(signalState);
 }
 
-void setServo() {
+void setServo(int signalState) {
     if (signalState > signalThreshold) {
     if(servoState == openPos){
       servo.write(closedPos);
