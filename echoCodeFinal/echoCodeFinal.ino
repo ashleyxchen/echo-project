@@ -1,21 +1,28 @@
 #include <Servo.h>
 Servo servo;
 
-const int signal = A0;
+const int signal = A5;
+const int LED = 2;
 const int signalThreshold = 250;
 int signalState;
 int servoState;
 const int openPos = 170; 
-const int closedPos = 100; 
+const int closedPos = 104; 
 
 void setup() {
   Serial.begin(9600);
   
   pinMode(signal, INPUT);
+  pinMode(LED, OUTPUT);
+
+  digitalWrite(LED, HIGH);
 
   servo.attach(9);
   servo.write(openPos);
   servoState = openPos;
+
+  // uncomment to execute unit test
+  // unittest_main()
 }
 
 
@@ -29,7 +36,11 @@ void loop() {
   Serial.println();
 
   // moving servo
-  if (signalState > signalThreshold) {
+  setServo(signalState);
+}
+
+void setServo() {
+    if (signalState > signalThreshold) {
     if(servoState == openPos){
       servo.write(closedPos);
       servoState = closedPos;
@@ -43,6 +54,3 @@ void loop() {
     delay(2000);
   } 
 }
-
-
-
